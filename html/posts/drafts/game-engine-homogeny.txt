@@ -1,0 +1,8 @@
+Title: Game Engine Homogeny
+
+
+I believe this was the first question for the people at the roundtable. If memory serves, maybe 60% of the respondents used Unity, 30% used Unreal, and the remaining 10% were split between various engines. My response was that my previous game was on Source, but my next game will be on a custom engine.
+
+It worries me that a large majority of game developers in 2015 are using one of only two engines. A game engine is a tool, and any tool shapes your thinking. When you hold a hammer, the world looks like a nail. Similarly, when you’re using Unity, every game idea looks like a shooter or a platformer. Unity and Unreal are very good at making shooters and platformers, but they’re not good at making new ideas. How could they be? Those ideas don’t exist yet, Unity and Unreal can’t help you build them. Their engine’s designers can only help you build games that they’re already aware of. As a result, using their engines will subtly, unconsciously encourage you to build games that you have already been made before.
+
+There is a reason that Minecraft, arguably the single most revolutionary game of this decade, wasn’t built on an existing game engine. It would certainly be possible to build Minecraft on an existing game engine, but building without the limitations of an engine allowed Notch to...

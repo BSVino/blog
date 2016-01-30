@@ -1,0 +1,61 @@
+Title: Whacking at Screws with Hammers
+Time: 1422118448
+
+
+This post is about Jai, a new programming language developed by <a href="https://twitter.com/Jonathan_Blow">Jonathan Blow</a>. If you're unfamiliar with Jai, I've put up <a href="https://github.com/BSVino/JaiPrimer/blob/master/JaiPrimer.md">a primer that covers what Jai is and why it exists</a>, you should read that first. (It's a bit out of date now, I'll get to updating it eventually, but it's enough context for this post.) This post is about why I think Jai has the potential to be a successful language.
+
+But first, a disclaimer: I'm not Jon Blow, and I have no association with Jon Blow. The things I say in this post don't represent Blow's opinions. They are my (possibly incorrect) opinions only. (If you are Jon Blow and want me to correct anything in this post, I would be happy to.)
+
+
+
+
+JAI IS BETTER C
+--
+
+If you've skimmed the primer then you've seen some of Jai's cool features, but it's not the features that sold me on Jai. It's the philosophy. Jai is alone among modern languages in that it isn't trying to be a new language. Instead, it's trying to be a better old language. Few languages have been so popular and ubiquitous and C, and C got there more because of its simplicity than its feature list.
+
+Many of the properties that made C a successful language are shared by Jai and not shared by other modern languages:
+
+
+* **Native speed**. In fact, Jai's SoA features can make it easier to optimize code for modern processors, meaning it won't be surprising to see Jai code run faster than C.
+
+* **Simple syntaxes** which can reduce coding iteration times. Lack of arbitrary restrictions such as "everything is a class" or "everything is a function" leaves the decisions of abstraction up to the programmer.
+
+* **Debugging on the metal**. No virtual machine lies between a program and the processor. No level of indirection exists between the program and its operation.
+
+* **Deployable anywhere**. Jai can be run on any platform that C can be run on, which is pretty much every platform.
+
+* **Easily bindable**. Jai can interface with any language that C interfaces with, which is all of them, so a C binding is effectively a Jai binding.
+
+In spite of its lack of modern features C hasn't gone away because it's focused. It provides as much direct access to the hardware as is possible while still providing portability between architectures. It doesn't ship with any vector classes, input/output stream classes, database interfaces, user interface mechanisms, image loading, threading tools, or god forbid XML parsers. While most modern languages want to be a platform and offer everything the programmer will ever need, C remains focused on its solitary goal of abstracting architectures. C doesn't need to provide every solution for every programmer, because C is not a platform. Rather, it's just an abstraction of the actual platform, the hardware architecture. Jai takes the same approach, and has the same strengths, but makes quality-of-life and performance improvements on C that will give C developers a reason to consider adopting it.
+
+But I think you should think about Jai even if you're not a C programmer.
+
+
+
+HAMMERS AND NAILS
+--
+
+Your thinking is shaped by the tools that you use. In more common terms, when you hold a hammer everything looks like a nail. As C and C++ programmers, we have been hammering nails for the past few decades, and we continued to hammer even when our nails slowly turned into screws. The machines that C was designed for 40 years ago no longer exist, (and the machines that C++ was designed for never existed,) and it's time for a language designed to allow the programmer to take advantage of the capabilities of modern processors.
+
+It may seem odd that Jai, a language ostensibly for game development, doesn't provide built-in libraries for image loading, audio playback, rendering, vector math, and so on. But consider that no library can provide a single solution for any of these that will be appropriate for all users. When writing a one-size-fits-all solution, you win generality by losing performance and form factor, and you win time in the short run but lose flexibility. Then if you ever have to ditch the general solution for a specific one, you end up losing back your time in the long run.
+
+That loss of flexibility is more dangerous than you think, specifically because of the hammer/nail problem. When you use a solution written by someone else for the most general case you don't just lose the ability to solve the problem a different way. You also lose the ability to _think about_ solving the problem a different way. You lose the ability to _realize at all_ that the problem can be solved a different way. You come to think about the world as nails and your language as a hammer. Unless you step back to consider why you're holding a hammer in the first place you'll fail to realize there's something wrong with a world where people hammer screws.
+
+Jai may not be the language for you, but it is re-evaluating the assumptions of modern languages. Take a closer look at it and see if you're not holding a hammer.
+
+Here's a concrete example.
+
+
+
+OPTIMIZING FOR DEVELOPER TIME
+--
+
+Some modern languages are built to optimize developer time. To this end the languages provide large class libraries with functionality for anything that might need doing. Performance is not the highest concern. The implicit assumption is that optimizing for developer time can only be done at the cost of running time. That's often true, but the real problem is the assumption that performance isn't that important.
+
+If you're shipping something that will be used by other people, then not worrying about performance or leaving it up to the language can bite you. One day your project may be featured on that popular website or get mentioned by some celebrity and you'll suddenly have 100,000 clients using your system. It's too late then to start caring about performance. Twitter made that mistake in their early days when they used Ruby, and we all saw plenty of fail whales. [They've since switched to Scala](https://blog.twitter.com/2013/new-tweets-per-second-record-and-how) and their performance and stability increased by orders of magnitude. I've seen this in action myself: The Wordpress installation hosting the [Double Action website](http://doubleactiongame.com) fell over every time a Youtuber released a new video of the game. I had to put up a static page, often for days at a time, to deal with the influxes. But the <a href="http://data.doubleactiongame.com/leaderboard/">leaderboards</a>, which I hand-coded in C with some Python support scripts, never faltered. Even when not faced with hundreds of thousands of users, people want their programs to respond quickly and their webpages to load instantly. Developer time optimization is important, but assuming that it's the only issue is a mistake.
+
+Part of Jai's philosophy is: Programmers spend a lot of their time reworking code. A language can optimize for development time by reducing the friction in reworking code. We know all of the common ways in which programmers rework code, we do it every day. One common code rework case (especially for game developers) is optimizing running time. Jai has data layout features that reduce friction for this task. By enabling programmers to modify data structures on modern processors to be more performant without having to rework the code that supports them, Jai helps programmers write fast code faster. Jai wins in both running time and development time by making the rework easy.
+
+In Jai, that rework, which can potentially gain an order of magnitude improvement, is a single line of code. (<a href="https://www.youtube.com/watch?v=ZHqFrNyLlpA">See the most recent demo.</a>) The equivalent rework in C would have been a huge pain. The equivalent rework in an object-oriented virtual-machine modern language would have been impossible. The possibility of doing this sort of rework painlessly, and the value that this sort of rework is important and thus should be painless, are ideas that never occurred to the designers of modern languages. They built tools like garbage collectors and dynamic dispatchers and first-class functions that solve other problems, and when they have performance problems they whack at screws with hammers.
+

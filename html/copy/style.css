@@ -1,0 +1,187 @@
+/* First a CSS reset */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Now comes my markup */
+
+body {
+	font-family: Martel, serif;
+	font-size: 20px;
+	line-height: 180%;
+	width: 860px;
+	margin-left: auto;
+	margin-right: auto;
+    text-align: justify;
+    text-justify: inter-word;
+	font-weight: 300;
+	margin-bottom: 50px;
+}
+
+code {
+	font-family: Source Code Pro, monospace;
+}
+
+pre {
+	margin: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+h1 {
+	font-size: 36px;
+	font-weight: 800;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+h2 {
+	font-size: 24px;
+	font-weight: 800;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+h3 {
+	font-size: 20px;
+	font-weight: 800;
+}
+
+h4 {
+	font-size: 18px;
+	font-weight: 800;
+}
+
+h5 {
+	font-size: 16px;
+	font-weight: 800;
+}
+
+h6 {
+	font-size: 14px;
+	font-weight: 800;
+}
+
+p {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+em {
+	font-style: italic;
+}
+
+strong {
+	font-weight: 800;
+}
+
+dt {
+	float: left;
+	width: 100px;
+	clear: both;
+}
+
+dd {
+	float: left;
+	width: 540px;
+	margin-top: -20px;
+	margin-left: 30px;
+}
+
+dl {
+	width: 650px;
+	clear: both;
+	display: table;
+}
+
+li {
+	margin-left: 30px;
+}
+
+ul li {
+	list-style-type: square;
+}
+
+ol li {
+	list-style-type: decimal;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#date {
+	text-align: right;
+	font-size: smaller;
+	color: #888;
+	font-style: italic;
+}
+
+#date a {
+	color: #888;
+}
+
+#nav {
+	text-align: right;
+}
+
+#archive ul li {
+	list-style-type: none;
+	text-align: center;
+}
+
+;;

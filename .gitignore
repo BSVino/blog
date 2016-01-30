@@ -1,0 +1,4 @@
+/htdocs
+/*.pyc
+.DS_Store
+*.sublime-workspace

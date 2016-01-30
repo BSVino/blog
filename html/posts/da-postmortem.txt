@@ -1,0 +1,6 @@
+Title: Double Action: Postmortem
+Time: 1428586628
+
+<iframe width="853" height="480" src="https://www.youtube.com/embed/Nztt9kFvObU?rel=0" frameborder="0" allowfullscreen></iframe>
+
+This is a copy of the talk I gave at ECGC on April 9, 2015. It's about using guiding principles to create meaningful game designs. Enjoy.

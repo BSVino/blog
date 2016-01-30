@@ -1,0 +1,54 @@
+Time: 1435420724
+Title: Dispelling Indie Developer Myths
+
+At the latest GDC I attended the "Virtual Reality Developers Roundtable". (A roundtable is an hour long session in which industry professionals can discuss the current problems and the state of the art in their trade. I don't know why they call it a roundtable, none of the tables are round.) The VR developers roundtable was mostly VR developers from places like Oculus and a handful of VR startups, many with prototypes on hand to show others. I also attended the "Visual Effects Artists Roundtable" which was also attended by senior visual effects artists from established companies like Sledgehammer Games and Double Fine, and even an engineer from Nvidia.
+
+But when I went to the "Low Budget Indie Developers Roundtable", it was mainly students and people from other industries who were trying to break into games. Fewer than five, including me, had ever shipped any games. People who were giving advice were largely inexperienced, and as a result I heard a ton of awful advice. I was astonished that such awful advice is still cropping up in such a professional venue, after a decade of indie games. Why hasn't the community been able to disseminate better advice more effectively? And yet it persists, so here is my attempt at clearing up some of the misconceptions I heard. Let's start by going over the questions that were presented to the roundtable.
+
+**What engine do you use?** I believe this was the first question for the people at the roundtable. If memory serves, maybe 60% of the respondents used Unity, 30% used Unreal, and the remaining 10% were split between various engines. My response was that my previous game was on Source, but my next game will be on a custom engine. I hardly recommend using Source, but I think more indie game developers should consider this advice:
+
+_Use your own tech._
+
+It worries me that a strong majority of game developers in 2015 are using one of only two engines. A game engine is a tool, and any tool shapes your thinking. When you hold a hammer, the world looks like a nail. Similarly, when you're using Unity, every game idea looks like a shooter or a platformer. Indies have to innovate to survive, and using an existing engine will encourage you to make an existing game. To make a new game, you need a new engine.
+
+**Crowdfunding?** It seemed like half of the people there had a plan to do some sort of crowdfunding campaign, and the other half had advice for the first half on doing crowdfunding campaigns, and of the whole nobody but myself had actually run a successful one. (Full disclaimer: the successful one that I ran was not for a game, but you know!)
+
+Crowdfunding campaigns are not free money. Nobody will give you money for having an amazing game concept. You need to treat a crowdfunding campaign as a sale. In some ways, you need to think of it as an early launch. You need to offer something of value for people to pay for. If you have nothing of value other than the game itself, you need to consider taking another avenue to finding cash.
+
+The test I like to use in thinking about crowdfunding is:
+
+_Could I make the game on my own, without crowdfunding?_
+
+If you can make a scaled down version of the game without crowdfunding, then you have something of value to offer your customers. If you have nothing of value then nobody will want to give you money, and your campaign will fail. If you can't make a simpler game on your own, then you have bigger problems than crowdfunding - you need to reconsider your entire strategy.
+
+**Finding team members?** When asked what strategy people had to look for team members to help build their games, most people talked about promising delayed compensation and offering partial ownership. Both of those strategies have serious logistical and psychological problems. Formalizing agreements involving money is difficult enough. What you're essentially asking is for people to work for free and take the risk that they will be screwed. As a general rule, nobody whose work is worth having will be willing to work for free and with the risk that they will be screwed. But how are you supposed to build the world's next amazing game without a team to help you?
+
+_Go it alone._
+
+I question the motivation to grow your team in the first place. The assumption is that a better game can be made with eight or twelve people than can be made with one or two people. This is wrong. Each of those additional people adds more overhead and complexity to your game development operation. It's actually more difficult to make a game with a large team than with a small team.
+
+**Scope control?** I don't remember what the actual question was - it was something about game design. The general advice was to think big. If you haven't figured it out from the name of this blog, I disagree. You can't make a big game - you're an indie game designer. You have to pay yourself for every minute of work you spend, and you only have your nights and weekends. You can't make anything approaching the complexity of what large studios put out. Your only recourse is to think deeply about what the core idea of your game is and make that and only that and make that well. At the end of that thinking process, your game will be smaller, but it will be easier to make, your vision will be clearer to players and other developers, and you will be happier making it. I gave a talk on exactly how to do this thinking, <a href="https://www.youtube.com/watch?v=Nztt9kFvObU">you can watch it here</a>.
+
+If you follow my other advice then you have a small team and no external sources of cash. You can't afford it any other way, you must:
+
+_Think small._
+
+You should think small, live small, work small, and be small.
+
+**How do I do "social" marketing?** This was one of the topics that had some of the worst advice. It seems that otherwise sensible people turn into buzzword-spewing gibberish machines when the word "social" is mentioned. The common sense of how to communicate with other people is passed over in favor of the dream of a million Twitter followers. I have one simple easy powerful and tweetable recommendation:
+
+_Respect your audience._
+
+Don't tweet useless crap just because you think you have to remind your audience that you exist. Don't spy on your audience with creepy analytics suites that tell you their favorite foods and the names of their pet animals. Don't try to sell to them. The people on the other end of the line are just that - real people who will tune you out if you waste their time. Give them something of value or nothing at all.
+
+**The legal situation.** Almost everybody around the table advised that every indie game developer should have a lawyer on retainer. This will probably be the most contentious of my recommendations, but here goes:
+
+_Don't lawyer up until you absolutely have to._
+
+Other developers will tell you that you need to lawyer up, they did and they don't regret it. They're rationalizing their sunk costs. I've lawyered up for previous projects and paid my attorney in retainer to draft contracts and so on. In the end I got a bunch of contracts, but the contracts were all signed and then filed in a drawer and forgotten about. Nothing ever become of them. If I hadn't have had them, I don't think things would have been any different, because the thing keeping my team together wasn't contracts, it was trust.
+
+Lawyers are good at giving advice. They will tell you that you should lawyer up. But of course, it's in a lawyer's best interest that everyone thinks that they need a lawyer. In reality, there aren't any situations that you as an indie game developer can get yourself into where you benefit from having a lawyer up beforehand. Not getting a lawyer now does not preclude getting a lawyer later, and waiting until you absolutely need one (and can afford one) doesn't make anything worse.
+
+If you think that you have a problem with another person or company and need a lawyer to fix your problem, then you misunderstand how the legal system works. Contracts are only worth the amount of money that you're willing to pay a lawyer to enforce them. If you distrust someone enough that you feel you must cement the relationship with legalese, consider whether it's a relationship that you want to be in at all. A legal framework will not help when your team is spiraling the drain. The only thing you can do to avoid messy splits is to retain a strong relationship with your (few) teammates. "Low Budget" means figuring out how to go it without a lawyer, until the glorious day comes when you make a hojillion dollars and you need a lawyer to keep the hounds off your back. Don't bother getting one before that day comes, and trust me, you'll know it when it happens.
+
+This was easily the worst session at GDC that I attended. This particular roundtable makes no sense. None of the people with any actual expertise - successful game developers - have any reason to go. The successful ones already form a close community and they talk to each other all year long on Twitter, there's no reason to get together at a roundtable at GDC. As a result, the roundtable is dominated by inexperienced people giving crappy advice, and it probably shouldn't exist.

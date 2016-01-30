@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+	<channel>
+		<description></description>
+		<title>Think Small</title>
+		<generator>Think Small</generator>
+		<link>http://www.vinoisnotouzo.com/blog</link>
+		{$entries}
+	</channel>
+</rss>

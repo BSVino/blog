@@ -1,0 +1,47 @@
+Title: Thinking Along Your Tools
+
+[BS] Vino: one thing mentioned by one of the game lab guys is that unity breaks down a lot of the time between trying some code and seeing its effects
+[BS] Vino: unity the game engine
+[BS] Vino: but not if you’ve published the game, only while developing
+[BS] Vino: so i want to watch someone working in unity and see how they interact with the engine and what the process is so i can figure out where viewback is needed
+Scout: smart plan
+Scout: especially considering what’s his name’s ideas about ideas being trapped
+Scout: sounds like a classic case of that
+[BS] Vino: they’re all obsessed with unity there and i realized, everybody these days is using the same tool to make games
+[BS] Vino: that means everybody will be making the same kind of game
+[BS] Vino: because you start thinking along your tools
+[BS] Vino: but, not everybody has the skills to write their own tools
+[BS] Vino: most people don’t in fact
+[BS] Vino: that means the vast majority of people will always be doomed to thinking along the lines of whatever tools exist
+Scout: so would you rather make tools or design games (and make the tools to make those games)?
+[BS] Vino: i was thinking about this because if you want to improve, for example, mathematical communication, you have to develop tools that allow mathematicians to communicate without writing proofs and formulas
+[BS] Vino: but then the mathematicians will reject those tools because mathematics thinks divergently, and tools channel your thoughts
+[BS] Vino: so the situation seems to be at an impasse. the most versatile tools are always the formulas
+[BS] Vino: but then again, the formulas are also tools and the best mathematicians are the ones that forget the formulas and make up new tools
+[BS] Vino: now it’s a contest to see how many long lines i can write
+Scout: keep going
+Scout: i want to know where your thoughts are taking you
+Scout: I’m reading
+[BS] Vino: so maybe there’s some hope for better mathematics communication tools, but they would have to be damn versatile to compete with pen and paper
+[BS] Vino: hold up i’m going to go warm my hands
+[BS] Vino: this sounds like it could be a good blog post maybe
+Scout: geting there
+[BS] Vino: back to games it means that most games these days are games that unity or unreal are good at making, but i’ve not used it so i don’t know what those are
+Scout: I’d like to see something a bit more concrete
+[BS] Vino: that’s the end of my thought process so far
+Scout: okay
+Scout: it’s a start :)
+[BS] Vino: part of unity is the scripting languages, javascript etc, so those are more tools that channel thinking
+
+Scout: you’re saying tools channel thinking
+Scout: well, ther are different classes of tools
+Scout: I started thinking about subclasses of code
+Scout: am I more limited in my expression of ideas because I use Python
+Scout: than you are because you use C
+Scout: am I more free because of it?
+Scout: I don’t have to worry about memory allocation
+Scout: but I also don’t bother to think ofwhat I coudl do
+Scout: with fine-grained control of memory management
+[BS] Vino: that’s a good point
+[BS] Vino: when does the abstraction allow you to think more things and when does it prevent you from thinking things
+trig/algebra abstracts arithmetic and enables calculus. we can think about dimensions >= 4 because we have the concept of vectors.
