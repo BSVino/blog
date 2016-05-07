@@ -66,6 +66,7 @@ body {
 
 code {
 	font-family: Source Code Pro, monospace;
+	line-height: 120%;
 }
 
 pre {

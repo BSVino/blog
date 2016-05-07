@@ -110,6 +110,9 @@ common_post_words = {}
 post_times = {}
 
 for post in post_files:
+  if post.startswith("/."):
+    continue;
+
   if "drafts" in post:
     continue
  
@@ -132,7 +135,7 @@ for post in post_files:
       break
 
   if post_time == 0 or len(post_title) == 0:
-    print "Post " + post + " in invalid."
+    print "Post " + post + " is invalid."
     die
 
   index = post_text.find('\n')
