@@ -122,7 +122,7 @@ The Data-Oriented/OOP-Is-Bad crowd has been making the case lately for preferrin
 
 I'm sure you didn't just read all that. Not only is there no syntax highlighting (sorry again) but it just does too many things. There's a string length procedure, a binary search, a bunch of table lookups, some error checking code, setup code, and for some crazy reason I've inlined the code to push onto a dynamic-size array. The only procedure call in that code is to realloc(), which can't be inlined.
 
-That's obviously absurd. I admit that I'm strawmanning maybe a little; The "OOP is bad" crowd would certainly agree that this is bad code. The reason it's bad is that there are too many levels of abstraction in the same procedure. Let's look at it again, but this time anything that's not directly necessary to render text into quads has been pushed out:
+That's obviously absurd. I admit that I'm strawmanning maybe a little; The "OOP is bad" crowd would certainly agree that this is bad code. The reason it's bad is there are too many levels of abstraction in the same procedure. Let's look at it again, but this time anything that's not directly necessary to render text into quads has been pushed out:
 
 	// Turns a text string into a series of quad draw commands
 	void Renderer::DrawText(RenderOptions* options, const char* text,
