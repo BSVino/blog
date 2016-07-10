@@ -1,0 +1,148 @@
+Title: Numerical Methods for Physics Integration in Video Games
+Time: 1468112427
+
+As part of the research for my <a href="https://www.youtube.com/playlist?list=PLW3Zl3wyJwWPhARNV8SH1Jev5sgdH28ka">numerical analysis series in Math for Game Developers</a> I implemented and tested a number of integration techniques and compared them in an array of different situations. I'm not a game physics specialist so I don't know what the current state of the art is, but the latest/best information that I could find floating around the internet is <a href="http://gafferongames.com/game-physics/integration-basics/">this post by Glenn Fielder</a>, which argues for always using RK4 instead of Euler. But after doing some tests I found that his recommendations didn't match my test results, so I decided to dig in further.
+
+I tested for two different situations. One is a velocity field, where a particle has no momentum and always exactly takes the velocity of the integration function. This is the case covered in your typical numerical analysis textbook, where $x' = f(x, t)$ gives the velocity as a function of position and time. This is used more often in particle systems. The other is projectile motion, where the object has momentum and has forces applied on it. Here you have to do two integrations, one for position and one for velocity. Let's look at velocity fields first, since they're the simpler case.
+
+Velocity Field
+--
+
+I evaluated three methods:
+
+*Euler's Method, order 1*
+
+$$x_{i+1} = x_i + hf(x_i, t_i)$$
+
+*Midpoint Method, order 2*
+
+$$x_{i+1} = x_i+hf(x_i+hf(x_i, t_i), t_i+h)$$
+
+*Runge Kutta order 4*
+
+$$k_1 = f(x_i, t_i)$$
+$$k_2 = f(x_i + \frac{1}{2}k_1, t_i + \frac{1}{2}h)$$
+$$k_3 = f(x_i + \frac{1}{2}k_2, t_i + \frac{1}{2}h)$$
+$$k_4 = f(x_i + k_3, t_{i+1})$$
+$$x_{i+1} = x_i + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$$
+
+The results are actually pretty unsurprising. RK4 of course wins hands-down. Running Euler's method at $h = 1/60$ is roughly equivalent to running Midpoint at $h = 1/8$ or RK4 at $h = 1/3$.
+
+I don't think that's the end of the story though. Midpoint requires two evaluations and RK4 requires four. So RK4 is four times more expensive per iteration than Euler. We only have to run RK4 once per every 20 Euler evaluations to get equivalent precision. But how expensive is our evaluation function? Is evalution of $f()$ the expensive part of the particle system?
+
+There's another factor - if you run RK4 only three times a second, you need to do some kind of interpolation the rest of the time or your particles will look very jerky. That means more memory (in addition to position we have to store velocity and interpolation time), and more complexity. On top of that, while I haven't tried it, I can't imagine that linear interpolation over an update rate of $h = 1/3$ will look any good. So maybe some other type of interpolation will be necessary, or ... ? ick. How much do you really want to save those $f()$ evaluations?
+
+OK, so maybe it's not worth it to maintain the same precision at a larger timestep. Maybe instead we can use Midpoint or RK4 to get better precision at the same timestep? Most of the time $h = 1/60$ is a small enough timestep that you can't tell the difference between Euler and RK4. For example, take this differential equation:
+
+$$x' = f(x, t) = \left<-(x+1)(x+3), 5x + 5t^2 + 2t\right>$$
+$$t \geq 0$$
+$$x_0 \leftarrow \left<-2, \frac{1}{3}\right>$$
+$$h = 1/60$$
+
+The following is an screencap from my test program of the solutions given by Euler, Midpoint and RK4:
+
+<img src="integrate-field.png" />
+
+Apologies for the lack of axis labels or anything. The red line is the Euler solution. The green line is Midpoint. The blue line is RK4 and the yellow line is the actual solution ($x(t) = \left<-3 + \frac{2}{1+te^{-2}}, t^2+(1/3)e^{-5t}\right>$), but Midpoint, RK4 and the actual solution are so close that only Midpoint shows in this screencap. This screenshot is already very zoomed in, so the difference between Euler and the other methods is very small. For most applications in video games, Euler will be precise enough.
+
+Maybe you really, really care about the precision of your particle system. Then you have to choose between one or three additional evaluations. Midpoint will get you an order of magnitude more precision than Euler and only takes one additional function evaluation. But is RK4 worth it?
+
+All numerical methods start to suffer roundoff error once $h$ grows too small, and with Euler it turns out you can solve for the $h$ that minimizes error. *(N.B. Roundoff error is the error you get when you round off the result of a calculation in order to store it in a float.)* That value is
+
+$$h = \sqrt{\frac{2\delta}{M}}$$
+
+where $\delta$ is an upper bound for the roundoff error and $M$ is an upper bound for $f'(x, t)$ for any $x, t$. (Burden & Faires, Numerical Analysis 9th ed. p273 Eq. (5.14).) Depending on what floating point data type you use and what $M$ is, you could get different values for this, but if you are generous then you start brushing up against $h = 1/60$, meaning we are already getting about the most you can get out of Euler. The other techniques don't have nice closed-form formulas that describe the $h$ that gives you minimum error, (or at least I don't know of any,) but since many more calculations are happening, roundoff error will be larger. But $h$ is already about as small as it can be with Euler, so at $h=1/60$ going from Midpoint to RK4 may actually grow your error. The Midpoint solution is already quite good, so it seems as though there's no point in going to RK4.
+
+If your process is offline and you aren't showing your results in real-time then I would agree that RK4 is the right choice, but for integrating velocity fields for the purposes of rendering particles in realtime, I would argue that Euler is the way to go.
+
+Projectile Motion
+--
+
+This application requires double integrations, once for velocity and once for acceleration. In my setup I have a function of position and velocity $f_a(x, v)$ which gives the sum total of acceleration due to all forces currently acting on an object. Then I have two helper functions that perform linear interpolations along my current velocity and acceleration. These will be my integration functions, one for velocity:
+
+$$v_{v_i}(x, h) = v_i + hf_a(x, v_i)$$
+
+and one for acceleration
+
+$$a_{x_i}(x, h) = f_a(x_i, v) + hf_a(x_i + hv, v)$$
+
+$x_i$ and $v_i$ in the above functions are the current position and velocity. (I won't specify the subscripts after this - think of them as being like a closure.) (If you have trouble parsing the math, <a href="https://github.com/BSVino/MathForGameDevelopers/blob/42b3fca1ece04c4f5a86990e406f97f3c69ff64f/game/game.cpp#L600">try the code version instead</a>.) I evaluated five methods:
+
+*Euler's Method, order 1*
+
+$$x_{i+1} = x_i + hv(x_i, 0)$$
+$$v_{i+1} = v_i + ha(v_i, 0)$$
+
+*Semi-Implicit Euler's Method, order 1*
+
+$$x_{i+1} = x_i + hv(x_i, h)$$
+$$v_{i+1} = v_i + ha(v_i, 0)$$
+
+*Verlet, order 2*
+
+$$x_{i+1} = 2x_i - x_{i-1} + h^2a(x_i, 0)$$
+
+*Midpoint, order 2*
+
+$$x_{i+1} = x_i+hv(x_i+hv(x_i, t_i), t_i+h)$$
+$$v_{i+1} = v_i+ha(v_i+ha(x_i, t_i), t_i+h)$$
+
+*Runge-Kutta order 4*
+
+$$k_1 = v(x_i, t_i)$$
+$$k_2 = v(x_i + \frac{1}{2}k_1, t_i + \frac{1}{2}h)$$
+$$k_3 = v(x_i + \frac{1}{2}k_2, t_i + \frac{1}{2}h)$$
+$$k_4 = v(x_i + k_3, t_{i+1})$$
+$$x_{i+1} = x_i + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$$
+
+$$k_1 = a(x_i, t_i)$$
+$$k_2 = a(x_i + \frac{1}{2}k_1, t_i + \frac{1}{2}h)$$
+$$k_3 = a(x_i + \frac{1}{2}k_2, t_i + \frac{1}{2}h)$$
+$$k_4 = a(x_i + k_3, t_{i+1})$$
+$$v_{i+1} = v_i + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$$
+
+Sidetrack: Euler and S.I. Euler look similar, but note the $h$ in the velocity evaluation in S.I. Euler. In practice, this is the implementation that may be written by a naive programmer. You do something like:
+
+    velocity += dt * get_acceleration();
+    position += dt * velocity;
+
+and bam, you actually just wrote S.I. Euler instead of standard Euler. It actually takes more effort to write standard Euler:
+
+	vec3 old_velocity = velocity;
+    velocity += dt * get_acceleration();
+    position += dt * old_velocity;
+
+But a naive programmer is equally likely to write this:
+
+    position += dt * velocity;
+    velocity += dt * get_acceleration();
+
+which is equivalent to standard Euler, unless the acceleration is a function of position (as is the case with e.g. orbital mechanics), in which case you get $x_{i+1} = x_i + hv(x_i, h)$,
+$v_{i+1} = v_i + ha(v_i, 0)$, which is garbage that will probably still look mostly OK. Moral of the story: always integrate velocity first!
+
+In any case, how did the procedures perform? At $h=1/60$ I examined projectile motion of all of the methods and I found that, while the differences were few and small, Stardard Euler and S.I. Euler were about the same and slightly better than Midpoint/RK4, which were identical and slightly better than Verlet. I found this to be surprising. RK4 is supposed to be an order 4 integrator, but it didn't perform as well as the order 1 integrators. I got similar results when I used arbitrary cubic and quartic functions. But the most interesting results showed up in my tests for orbital mechanics, as might be required in a game like Kerbal Space Program:
+
+<img src="integrate-orbital.png" />
+
+The orange cube in the center is the sun. White is Euler, black is S.I. Euler, yellow is Verlet, cyan is Midpoint, and magenta is RK4. The actual solution is an elliptical path that is close enough to S.I. Euler and Verlet as to be covered up by them. So S.I. Euler and Verlet do the best, followed by RK4 and Midpoint, and finally Euler bringing up the rear. More surprising results! RK4 again didn't do so well. Not only that, but it is doing almost exactly as well as Midpoint, even though it's supposed to be two orders better than Midpoint, and only twice as well as Euler.
+
+After some research I discovered the reason: S.I. Euler and Verlet are *energy preserving* methods, and the other three are not. This means that the sum of potential and kinetic energy is preserved by S.I. Euler and Verlet, but not by the other methods. As the object gets closer to the sun, non-preserving methods add a little bit of altitude each iteration, thereby incleasing potential energy, without reducing velocity/kinetic energy. I mapped the energy of each object to the size of its cube in the preceding screenshot so you can compare. You can see that after 1.5 revolutions Euler is already noticeably larger, and Midpoint/RK4 are slightly larger.
+
+You may guess that the non-preserving methods approach the actual solution as $h \to \infty$, and you would be right. But what's the point, when S.I. Euler and Verlet already do so well? Runge-Kutta methods just aren't the best tool for this problem. If you view projectile motion as just a special case of orbital mechanics, the failure of RK4 there makes a bit more sense. If we want more accurate physics simulations in video games then we should be looking at energy-preserving methods rather than just higher-order methods.
+
+One more question remains: Why does S.I. Euler seem to do exactly as well as Verlet, when S.I. Euler is order 1 and Verlet is order 2? I played around with many nontrivial functions for $f_a$ including simulating drag, multiple stars, and some weird thrust functions, and I was never able to get anything that caused Verlet to do significantly better (or even different) than S.I. Euler. When I cranked $h$ up to $h = 1/1000$ Verlet started to lose a little bit of energy over time, and when I cranked it up a bit more I started running into precision problems, but other than those cases the two methods always gave almost identical solutions. In fact, for this application (where $a()$ and $v()$ boil down to the same function of acceleration) Verlet and S.I. Euler turn out to be the same. You can see it with some simple manipulations:
+
+$$x_{n+1} = x_n + hv_{n+1} \Rightarrow v_n = \frac{x_n - x_{n-1}}{h}$$
+$$x_{n+1} = x_n + hv_{n+1} = x_n + h(v_n + ha_n)$$
+$$ = x_n + h\left(\frac{x_n - x_{n-1}}{h} + ha_n\right) = 2x_n - x_{n-1} + h^2a_n$$
+
+so the difference between the two probably turn out to be implementation-dependent, e.g. Verlet is easier to implement on a GPU.
+
+The conclusion seems to be that RK4 is usually not the best choice in the context of video games and that one should opt for Verlet or S.I. Euler. S.I. Euler's really not so bad though, honestly. If you fix your timestep (which you're already doing, right?) then the error is small enough to be imperceptible. In one of my calculus videos I used the closed-form projectile motion equation ($x = \frac{1}{2}gt^2 + tv_0 + x_0$) to <a href="https://youtu.be/rqhAOc9gvC4?t=12m47s">predict the path of a projectile</a> and as you can see the prediction is close enough that you can't tell the difference. Most video games won't need anything better. When I made <a href="http://digitanks.com">Digitanks</a> I didn't know any numerical analysis and I naively used S.I. Euler to show preview lines for projectile paths. It ended up shipping in the game. At the time I thought I was doing something hacky and procrastinating a more correct solution, but as it turns out, sometimes the best thing is to think small.
+
+You can find my test code buried in the Math for Game Developers code, here are the interesting parts:
+
+* <a href="https://github.com/BSVino/MathForGameDevelopers/blob/42b3fca1ece04c4f5a86990e406f97f3c69ff64f/game/game.cpp#L494">Velocity field simulation</a>
+* <a href="https://github.com/BSVino/MathForGameDevelopers/blob/42b3fca1ece04c4f5a86990e406f97f3c69ff64f/game/game.cpp#L547">Orbital mechanics simulation</a>
+* <a href="https://github.com/BSVino/MathForGameDevelopers/blob/42b3fca1ece04c4f5a86990e406f97f3c69ff64f/game/game.cpp#L923">Rendering</a> (there are #if switches to turn different visualizations on and off)
+
